@@ -1,0 +1,81 @@
+﻿@model Assignment4_ServerSide_datatable.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" id="firstname" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" id="lastname" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                @*<label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control">
+                    
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>*@
+                <label asp-for="Gender" class="control-label"></label>
+
+                @foreach (var source in (Gender[])Enum.GetValues(typeof(Gender)))
+                {
+                    <div class="form-check">
+                        <input type="radio" asp-for="Gender" class="form-check-input" value="@((int)source)">
+                        <label asp-for="Gender" class="form-check-label">@source</label>
+                    </div>
+                }
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script>
+        $(function () {
+            $("#firstname").autocomplete({
+                source: '/Home/test'
+            });
+        });
+        //$('#firstname').tokenfield({
+        //autocomplete: {
+        //    source: ['red', 'blue', 'green', 'yellow', 'violet', 'brown', 'purple', 'black', 'white'],
+        //        delay: 100
+        //},
+        //showAutocompleteOnFocus: true
+        //})
+    </script>
+}
